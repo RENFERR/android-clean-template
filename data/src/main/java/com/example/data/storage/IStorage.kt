@@ -5,10 +5,11 @@ import com.example.data.storage.models.params.Params
 import com.example.data.utils.Response
 
 interface IStorage {
-    suspend fun getContent(params: Params): Response<Model>
-}
+    suspend fun get(params: Params): Response<Model>
 
-interface ILocalStorage : IStorage {
-    suspend fun saveContent(content: Model): Response<Any>
-    suspend fun deleteContent(content: Model): Response<Any>
+    interface INetwork : IStorage
+    interface IDatabase : IStorage {
+        suspend fun save(content: Model): Response<Unit>
+        suspend fun delete(content: Model): Response<Unit>
+    }
 }

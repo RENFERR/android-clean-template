@@ -1,8 +1,10 @@
 package com.example.data.repository
 
-import com.example.data.storage.database.DatabaseStorage
-import com.example.data.storage.network.NetworkStorage
+import com.example.data.storage.impl.database.DatabaseStorage
+import com.example.data.storage.impl.network.NetworkStorage
 import com.example.data.utils.Mapper.map
+import com.example.data.utils.Mapper.toDomainResponse
+import com.example.data.utils.Mapper.toDomainUnitResponse
 import com.example.domain.models.Model
 import com.example.domain.models.params.Params
 import com.example.domain.repository.IRepository
@@ -15,22 +17,22 @@ class RepositoryImpl @Inject constructor(
 ) : IRepository {
 
     override suspend fun getNetworkContent(params: Params): Response<Model> {
-        val response = network.getContent(params = params.map())
-        return response.map()
+        val response = network.get(params = params.map())
+        return response.toDomainResponse(mapper = { it.map() })
     }
 
     override suspend fun getLocalContent(params: Params): Response<Model> {
-        val response = database.getContent(params = params.map())
-        return response.map()
+        val response = database.get(params = params.map())
+        return response.toDomainResponse(mapper = { it.map() })
     }
 
-    override suspend fun saveContent(content: Model): Response<Any> {
-        val response = database.saveContent(content = content.map())
-        return response.map()
+    override suspend fun saveContent(content: Model): Response<Unit> {
+        val response = database.save(content = content.map())
+        return response.toDomainUnitResponse()
     }
 
-    override suspend fun deleteContent(content: Model): Response<Any> {
-        val response = database.deleteContent(content = content.map())
-        return response.map()
+    override suspend fun deleteContent(content: Model): Response<Unit> {
+        val response = database.delete(content = content.map())
+        return response.toDomainUnitResponse()
     }
 }

@@ -8,6 +8,6 @@ interface IRepository {
     suspend fun getNetworkContent(params: Params): Response<Model>
     suspend fun getLocalContent(params: Params): Response<Model>
 
-    suspend fun saveContent(content: Model): Response<Any>
-    suspend fun deleteContent(content: Model): Response<Any>
+    suspend fun saveContent(content: Model): Response<Unit>
+    suspend fun deleteContent(content: Model): Response<Unit>
 }

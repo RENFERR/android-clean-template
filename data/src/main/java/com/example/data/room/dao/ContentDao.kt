@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.data.storage.models.Model
+import com.example.data.storage.models.entities.Model
 
 @Dao
 interface ContentDao {
